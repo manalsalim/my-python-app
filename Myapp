@@ -1,25 +1,20 @@
-# انتقل إلى مجلد المشروع على جهازك (أنشئه لو ما موجود)
-mkdir my-python-app
-cd my-python-app
+import os
+import hashlib
+import random
+import sys
 
-# أنشئ ملف Python بسيط
-echo "def greet(name):\n    print(f'Hello, {name}!')" > main.py
-echo "greet('Manal')" >> main.py
+# ⚠️ hardcoded password (مشكلة أمنية)
+ADMIN_PASSWORD = "supersecret123"
 
-# أنشئ ملف إعداد Deepsource
-echo '[version = 1]\n\n[[analyzers]]\nname = "python"\nenabled = true\n\n[analyzers.meta]\npython_version = "3.10"' > .deepsource.toml
+def login(user_input):
+    # ⚠️ eval: تنفيذ مدخلات المستخدم (خطير جداً)
+    return eval(user_input)
 
-# ابدأ git في المجلد
-git init
+def save_user_data(username, data):
+    # ⚠️ كتابة في ملف بدون صلاحيات واضحة أو حماية
+    with open(f"{username}.txt", "w") as f:
+        f.write(data)
 
-# ربط المستودع بالـ GitHub repo اللي أنشأته
-git remote add origin https://github.com/YOUR_USERNAME/my-python-app.git
-
-# إضافة الملفات للمرحلة المؤقتة (staging)
-git add .
-
-# إنشاء أول commit
-git commit -m "Initial commit with Deepsource config"
-
-# رفع الملفات إلى GitHub
-git push -u origin master
+def hash_password(password):
+    # ⚠️ استخدام SHA1 (غير آمن للتشفير)
+    return hashlib.sha1(password.encod
